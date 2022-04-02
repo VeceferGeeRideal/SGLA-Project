@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     //public Dictionary<Item, int> itemDict = new Dictionary<Item, int>();//OPCIONAL
 
     public Item addItem_01;
+    public Item removeItem_01;
 
     private void Awake() {
        if (instance == null){
@@ -34,6 +35,10 @@ public class GameManager : MonoBehaviour
     private void Update (){
         if(Input.GetKeyDown(KeyCode.M))
             AddItem(addItem_01);
+
+        if(Input.GetKeyDown(KeyCode.N))
+            RemoveItem(removeItem_01);
+   
     }
 
     private async void DisplayItems (){
@@ -68,8 +73,23 @@ public class GameManager : MonoBehaviour
                
     }
 
-    private void RemoveItem(Item _item){
+    private async void RemoveItem(Item _item){
 
+        if (items.Contains(_item)){ //SE O ITEM JÁ ESTÁ NO IVENTÁRIO
+            for(int i = 0;i < items.Count; i++){
+                if(_item == items[i]){
+                    itemNumbers[i]--; // DIMINUI EM 1 A QUANTIDADE DO ITEM (QUE JÁ ESTÁ NO INV)
+                    if (itemNumbers[i]==0){ //SE A QUANTIDADE DO ITEM CHEGAR A ZERO
+                        //REMOVER ITEM DO INVENTÁRIO
+                        items.Remove(_item); 
+                        itemNumbers.Remove(itemNumbers[i]);
+                    }
+                }
+            }
+        } else{
+            Debug.Log(_item + "não está no inventário!"); //DEBUG PARA TESTES, NÃO IRÁ ACONTECER NO GAMEPLAY
+        }
+        DisplayItems();
     }
 
 }
