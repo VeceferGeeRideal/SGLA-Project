@@ -10,7 +10,13 @@ public class GameManager : MonoBehaviour
 
     public List<Item> items = new List<Item>();//OS ITENS QUE POSSUI
     public List<int> itemNumbers = new List<int>();//QUANTOS ITENS POSSUI
+    public int Coins;//DINHEIRO
+
+    
     public GameObject[] slots;
+
+    public GameObject CoinCounter;
+    
 
     //public Dictionary<Item, int> itemDict = new Dictionary<Item, int>();//OPCIONAL
 
@@ -42,7 +48,8 @@ public class GameManager : MonoBehaviour
     }
 
     private async void DisplayItems (){
-        for(int i = 0; i < items.Count; i++){
+        for(int i =0; i< slots.Length; i++){
+            if (i < items.Count){
             //UPDATE IMAGEM DOS SLOTS
             slots[i].transform.GetChild(0).GetComponent<Image>().color = new Color(1, 1, 1, 1);
             slots[i].transform.GetChild(0).GetComponent<Image>().sprite = items[i].itemSprite;
@@ -53,10 +60,22 @@ public class GameManager : MonoBehaviour
 
             //UPDATE ICONE X
             slots[i].transform.GetChild(2).gameObject.SetActive(true);
+            } else{ //REMOVER ITEM
+            //UPDATE IMAGEM DOS SLOTS
+            slots[i].transform.GetChild(0).GetComponent<Image>().color = new Color(1, 1, 1, 0);
+            slots[i].transform.GetChild(0).GetComponent<Image>().sprite = null;
+
+            //UPDATE CONTAGEM DOS SLOTS
+            slots[i].transform.GetChild(1).GetComponent<Text>().color = new Color(1, 1, 1, 0);
+            slots[i].transform.GetChild(1).GetComponent<Text>().text = null;
+
+            //UPDATE ICONE X
+            slots[i].transform.GetChild(2).gameObject.SetActive(false);
+            }
         }
     }
 
-    private void AddItem(Item _item){
+    public void AddItem(Item _item){
         //JÁ POSSUI O ITEM
         if(!items.Contains(_item)){
             items.Add(_item);
@@ -72,8 +91,13 @@ public class GameManager : MonoBehaviour
         DisplayItems();
                
     }
+    public void AddCoin(){
+        Coins++;
+        CoinCounter.GetComponent<Text>().text = Coins.ToString();
+        Debug.Log(Coins);
+    }
 
-    private async void RemoveItem(Item _item){
+    public void RemoveItem(Item _item){
 
         if (items.Contains(_item)){ //SE O ITEM JÁ ESTÁ NO IVENTÁRIO
             for(int i = 0;i < items.Count; i++){

@@ -5,10 +5,14 @@ using UnityEngine;
 public class UI_Manager : MonoBehaviour
 {
     public GameObject inventoryMenu;
+    public GameObject pauseMenu;
+
+    
 
     private void Start()
     {
         inventoryMenu.gameObject.SetActive(false);
+        pauseMenu.gameObject.SetActive(false);
     }
 
     private void Update() {
@@ -16,24 +20,44 @@ public class UI_Manager : MonoBehaviour
     }
 
     private void InventoryControl (){
-        if (Input.GetKeyDown(KeyCode.Escape)){        
+        bool inv = false;
+        bool pse = false;
+
+        if (Input.GetKeyDown(KeyCode.Tab)){        
             if (GameManager.instance.isPaused){
                 Resume(); //Se o jogo estiver pausado, presione esc para resumir
             }else{
-                Pause();  //Se o jogo estiver rodando, presione esc para pausar
+                inv = true;
+                Pause(inv);  //Se o jogo estiver rodando, presione esc para pausar
+            }                      
+        }
+        if (Input.GetKeyDown(KeyCode.Escape)){
+          
+             if (GameManager.instance.isPaused){
+                Resume(); //Se o jogo estiver pausado, presione esc para resumir
+            }else{
+                pse = true;
+                Pause(pse);  //Se o jogo estiver rodando, presione esc para pausar
             }
-           
+            
+        }
+        
+    }
+    private Pause(){
+        Time.timeScale = 0.0f;//TEMPO PARADO
+        GameManager.instance.isPaused = true;
+        if (inv == true){
+            pauseMenu.gameObject.SetActive(true);
+        }else if (pse == true){
+            inventoryMenu.gameObject.SetActive(true);
         }
     }
     private void Resume(){
         inventoryMenu.gameObject.SetActive(false);
+        pauseMenu.gameObject.SetActive(false);
         Time.timeScale = 1.0f;//Tempo real é 1.0f
         GameManager.instance.isPaused = false;
-    }
-     private void Pause(){
-        inventoryMenu.gameObject.SetActive(true);
-        Time.timeScale = 0.0f;//TEMPO PARADO
-        GameManager.instance.isPaused = true;
+        
     }
   
 }

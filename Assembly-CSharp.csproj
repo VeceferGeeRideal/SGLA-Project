@@ -58,9 +58,12 @@
      <Compile Include="Assets\Resources\Prefabs\Entities\Player\Scripts\IsometricRenderer.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\Item.cs" />
+     <Compile Include="Assets\Scripts\ItemButton.cs" />
      <Compile Include="Assets\Scripts\ItemDestroyer.cs" />
      <Compile Include="Assets\Scripts\PickupItem.cs" />
      <Compile Include="Assets\Scripts\UI_Manager.cs" />
+     <Compile Include="Assets\SimpleCollectiblesPack\SimpleCollectibleScript.cs" />
+     <None Include="Assets\Inventory\Tiny Fantasy Icons\README.txt" />
  <Reference Include="UnityEngine.Purchasing">
  <HintPath>C:/Users/Pc/Desktop/Main FINAL/Nova pasta/Library/ScriptAssemblies/UnityEngine.Purchasing.dll</HintPath>
  </Reference>
